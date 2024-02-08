@@ -1,0 +1,44 @@
+import M5
+from M5 import *
+from hardware import *
+import time
+
+pinTouch = None  # GPIO pin to detect touch
+counter = 0  # Counter for touches
+
+def setup():
+    global pinTouch
+    M5.begin()
+    # Initialize a GPIO pin (e.g., pin 1) as input for touch detection:
+    pinTouch = Pin(1, mode=Pin.IN, pull=Pin.PULL_UP)
+
+    # Initialize the screen
+    M5.Lcd.clear()  # Assuming M5.Lcd is the correct object based on your setup
+    M5.Lcd.setCursor(0, 0)
+    M5.Lcd.print("Touch Counter: 0")
+
+def loop():
+    global pinTouch, counter
+    touch_state = pinTouch.value()
+    
+    # Assuming touch_state is LOW (0) when copper pieces touch
+    if touch_state == 0:
+        counter += 1  # Increment counter
+        M5.Lcd.clear()
+        M5.Lcd.setCursor(0, 0)
+        M5.Lcd.print("Touch Counter: " + str(counter))
+        # Debounce delay
+        time.sleep(0.5)
+        # Wait for the touch to be released to avoid multiple counts for one touch
+        while pinTouch.value() == 0:
+            pass
+        time.sleep(0.1)  # Additional debounce delay after release
+
+if __name__ == '__main__':
+    try:
+        setup()
+        while True:
+            loop()
+    except (Exception, KeyboardInterrupt) as e:
+        print("An error occurred:", e)
+
