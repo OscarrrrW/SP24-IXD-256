@@ -1,1 +1,12 @@
 # SP24-IXD-256
+Assignment 01
+
+video:
+https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/74a42c02-9d7a-4f24-b90b-8cfeaaa22a7e
+
+Photo:
+![8741708036674_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/af45560d-4072-4139-9ff1-ad5a1c059a50)
+![8711708036551_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/98ec68df-6cd4-4958-822d-7769b47b94c1)
+![8721708036552_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/06cf404f-ce45-40dc-b5d2-f998ad2cae44)
+![8731708036553_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/17f7c4a9-9934-4101-be03-f8b6fc6187a0)
+Code is in AVD-Project01 File
