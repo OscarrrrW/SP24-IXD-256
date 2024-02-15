@@ -1,38 +1,59 @@
+import os, sys, io
 import M5
 from M5 import *
 from hardware import *
 import time
 
-pinTouch = None  # GPIO pin to detect touch
-counter = 0  # Counter for touches
+pinTouch = None  # 用于检测铝片接触的GPIO引脚
+counter = 0  # 接触次数计数器
+rgb5 = None  # RGB LED灯条
 
 def setup():
-    global pinTouch
+    global pinTouch, rgb5
     M5.begin()
-    # Initialize a GPIO pin (e.g., pin 1) as input for touch detection:
+    # 初始化铝片接触检测的引脚
     pinTouch = Pin(1, mode=Pin.IN, pull=Pin.PULL_UP)
-
-    # Initialize the screen
+    # 初始化RGB LED灯条
+    rgb5 = RGB(io=5, n=10, type="SK6812")
+    # 开始时设置灯条为红色常亮
+    
+    rgb5.fill_color(0xff0000)
+    
     M5.Lcd.clear()  # Assuming M5.Lcd is the correct object based on your setup
     M5.Lcd.setCursor(0, 0)
     M5.Lcd.print("Touch Counter: 0")
+    
 
 def loop():
-    global pinTouch, counter
+    global pinTouch, counter, rgb5
+    M5.update()
     touch_state = pinTouch.value()
     
-    # Assuming touch_state is LOW (0) when copper pieces touch
+    # 当检测到铝片接触时
     if touch_state == 0:
-        counter += 1  # Increment counter
+        counter += 1  # 计数器增加
+        # 在LCD上更新触摸次数
         M5.Lcd.clear()
         M5.Lcd.setCursor(0, 0)
         M5.Lcd.print("Touch Counter: " + str(counter))
-        # Debounce delay
-        time.sleep(0.5)
-        # Wait for the touch to be released to avoid multiple counts for one touch
+        # 触发RGB灯条颜色变化动画
+        trigger_rgb_animation()
+        # 防抖，等待直到不再接触
         while pinTouch.value() == 0:
             pass
-        time.sleep(0.1)  # Additional debounce delay after release
+        time.sleep(0.1)
+    else:
+        # 没有检测到接触时，灯条保持红色
+        rgb5.fill_color(0xff0000)
+        
+def trigger_rgb_animation():
+    # RGB灯条颜色渐变动画
+    # 由于没有set_pixel方法，这里用fill模拟颜色变化
+    rgb5.fill_color(0x0000ff)  # 全部切换到蓝色
+    time.sleep(1)
+    rgb5.fill_color(0x00ff00)  # 全部切换回红色
+    time.sleep(1)
+    
 
 if __name__ == '__main__':
     try:
@@ -41,4 +62,5 @@ if __name__ == '__main__':
             loop()
     except (Exception, KeyboardInterrupt) as e:
         print("An error occurred:", e)
+
 
