@@ -1,0 +1,172 @@
+import os, sys, io
+import M5
+from M5 import *
+from hardware import *
+import time
+
+
+# 初始化变量
+title0 = None
+label0 = None
+label1 = None
+label2 = None
+label3 = None
+
+imu_val = None
+imu_x_val = 0.0
+imu_x_last = 0.0
+imu_y_val = 0.0
+imu_y_last = 0.0
+
+adc1 = None  # ADC旋钮对象
+adc1_val = None  # ADC旋钮读数
+
+rgb2 = None
+
+rect3 = None
+rect0 = None
+rect4 = None
+rect1 = None
+rect5 = None
+
+def map_value(in_val, in_min, in_max, out_min, out_max):
+    # 将输入值从一个范围映射到另一个范围
+    out_val = (float(in_val - in_min) / float(in_max - in_min)) * (out_max - out_min) + out_min
+    return max(min(out_val, out_max), out_min)
+
+def setup():
+    global title0, label0, label1, label2, label3, rgb2, adc1
+    global rect0, rect1, rect5，rect3, rect4
+
+    M5.begin()
+    #title0 = Widgets.Title("IMU motion", 3, 0x000000, 0xffffff, Widgets.FONTS.DejaVu18)
+    #label0 = Widgets.Label("tilt or move", 3, 20, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
+    #label1 = Widgets.Label("up, down", 3, 40, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
+    #label2 = Widgets.Label("left, right", 3, 60, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
+    #label3 = Widgets.Label("--", 3, 80, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
+    
+    rgb2 = RGB(io=5, n=30, type="SK6812")
+    rgb2.fill_color((255 << 16) | (150 << 8) | 0)  # 设置初始颜色为黄色
+
+    adc1 = ADC(Pin(1), atten=ADC.ATTN_11DB)  # 初始化ADC旋钮
+    
+    rect3 = Widgets.Rectangle(15, 42, 84, 37, 0xffffff, 0xffffff)
+    rect0 = Widgets.Rectangle(45, 45, 20, 30, 0xffffff, 0xff0909)
+    rect4 = Widgets.Rectangle(99, 54, 6, 13, 0xffffff, 0xffffff)
+    rect1 = Widgets.Rectangle(69, 45, 20, 30, 0xffffff, 0xff0909)
+    rect5 = Widgets.Rectangle(20, 45, 20, 30, 0xffffff, 0xff0909)
+
+    
+
+    
+def loop():
+    global title0, label0, label1, label2, label3
+    global imu_val, imu_x_val, imu_x_last, imu_y_val, imu_y_last, rgb2, adc1, adc1_val
+    global rect0, rect1, rect5，rect3, rect4
+
+    M5.update()
+
+    # 读取IMU加速度值
+    imu_val = Imu.getAccel()
+    imu_x_last = imu_x_val
+    imu_x_val = imu_val[0]
+    imu_y_last = imu_y_val
+    imu_y_val = imu_val[1]
+    
+    # 新增显示逻辑
+    speed_x = abs(imu_x_val - imu_x_last)
+    speed_y = abs(imu_y_val - imu_y_last)
+    speed = max(speed_x, speed_y)  # 使用x或y轴的最大速度变化
+    
+    # 根据速度显示不同数量的矩形
+    if speed < 0.5:
+          # 显示一个矩形
+        rect0.setVisible(False)
+        rect1.setVisible(False)
+        
+    elif 0.5 <= speed < 1:
+         # 显示两个矩形
+        rect1.setVisible(False)
+      
+    else:
+        rect1.setVisible(True)
+        rect0.setVisible(True)
+       
+        
+    
+    
+    
+
+    # 读取ADC旋钮值
+    adc1_val = adc1.read()
+    # 映射ADC值到闪烁速度，调整为更明显的变化范围
+    blink_speed = map_value(adc1_val, 0, 4095, 1, 100)
+
+    # 当ADC旋钮值接近0时，保持常亮状态
+    if adc1_val < 10:  # 假设低于10为接近原点
+        # when the knob is close to 0
+        if (imu_x_val - imu_x_last > 0.5) or (imu_x_val - imu_x_last < -0.5) or (abs(imu_y_val - imu_y_last) > 0.5):
+            # show this color if there is motion:
+            
+            rgb2.set_color(0, 0xff0000)  # set first pixel red
+            
+            for i in range(5):  # set first 5 pixels red
+                rgb2.set_color(i, 0xff0000)
+            for i in range(5, 10):  # set pixels 5-10 blue
+                rgb2.set_color(i, 0x3333ff)
+            for i in range(10, 15):  # set pixels 5-10 green
+                rgb2.set_color(i, 0xff0000)
+            for i in range(15, 20):  # set pixels 5-10 green
+                rgb2.set_color(i, 0x3333ff)
+            for i in range(20, 25):  # set pixels 5-10 green
+                rgb2.set_color(i, 0xff0000)
+            for i in range(25, 30):  # set pixels 5-10 green
+                rgb2.set_color(i, 0x3333ff)
+            
+                
+            #rgb2.fill_color((255 << 16) | (0 << 8) | 0)
+            time.sleep_ms(500)
+        else:
+            # show this color if there is no motion:
+            rgb2.fill_color((255 << 16) | (150 << 8) | 0)  # 保持黄色常亮
+            time.sleep_ms(500)
+    else:
+        # knob is above 10
+        # 根据IMU加速度变化控制LED颜色
+        if (imu_x_val - imu_x_last > 0.5) or (imu_x_val - imu_x_last < -0.5) or (abs(imu_y_val - imu_y_last) > 0.5):
+            rgb2.set_color(0, 0xff0000)  # set first pixel red
+            
+            for i in range(5):  # set first 5 pixels red
+                rgb2.set_color(i, 0xff0000)
+            for i in range(5, 10):  # set pixels 5-10 blue
+                rgb2.set_color(i, 0x3333ff)
+            for i in range(10, 15):  # set pixels 5-10 green
+                rgb2.set_color(i, 0xff0000)
+            for i in range(15, 20):  # set pixels 5-10 green
+                rgb2.set_color(i, 0x3333ff)
+            for i in range(20, 25):  # set pixels 5-10 green
+                rgb2.set_color(i, 0xff0000)
+            for i in range(25, 30):  # set pixels 5-10 green
+                rgb2.set_color(i, 0x3333ff)
+        else:
+            rgb2.fill_color((255 << 16) | (150 << 8) | 0)  # 黄色
+        
+        # 根据ADC旋钮调整的速度进行延时以控制闪烁
+        blink_speed_int = int(blink_speed // 2)
+        time.sleep_ms(blink_speed_int)
+        rgb2.fill_color(0x000000)  # 关闭LED以产生闪烁效果
+        time.sleep_ms(blink_speed_int)
+
+if __name__ == '__main__':
+    try:
+        setup()
+        while True:
+            loop()
+    except (Exception, KeyboardInterrupt) as e:
+        try:
+            from utility import print_error_msg
+            print_error_msg(e)
+        except ImportError:
+            print("please update to latest firmware")
+
+
