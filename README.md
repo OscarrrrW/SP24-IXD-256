@@ -10,3 +10,12 @@ Photo:
 ![8721708036552_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/06cf404f-ce45-40dc-b5d2-f998ad2cae44)
 ![8731708036553_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/17f7c4a9-9934-4101-be03-f8b6fc6187a0)
 Code is in AVD-Project01 File
+
+Assignment 02
+
+Code in ADV project 02 File
+
+Photo: 
+![9081709833026_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/0c7787fb-ab22-41ca-9181-d81f2afac79c)
+![9071709833024_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/fa0f1e64-833c-49e3-8717-82e44af1a559)
+![9061709833023_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/443890cc-702c-44b1-a4db-962a658427a3)
