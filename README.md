@@ -23,7 +23,24 @@ Photo:
 ![9061709833023_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/443890cc-702c-44b1-a4db-962a658427a3)
 
 Video:
-
-
 https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/379f612d-b3f8-42ed-a41d-836bca8bf739
+
+Assignmnet 03
+
+This is a three-dimensional illustration model imitating ancient Chinese shadow puppets. The three 2D characters in the painting are presented in 3D form. The motion effect of the three roles is increased by Servo, and the lamp strips are controlled by buttons to create the effect of street lamps at night.
+
+Code in ADV project 03 File
+
+Photo:
+![9171711675617_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/ec315087-dbe6-46a5-8808-f527376b5d88)
+
+Video:
+
+
+
+https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/6c1f961a-97b2-4388-b292-f8177aa3a59f
+
+
+https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/a3b5486d-029c-4ec8-a0ee-9bd192b59c6d
+
 
