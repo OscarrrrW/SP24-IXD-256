@@ -32,6 +32,8 @@ This is a three-dimensional illustration model imitating ancient Chinese shadow 
 Code in ADV project 03 File
 
 Photo:
+![9201711675755_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/8549e8fb-a0d5-4347-b51e-58c481f3b20d)
+
 ![9171711675617_ pic](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/ec315087-dbe6-46a5-8808-f527376b5d88)
 
 Video:
