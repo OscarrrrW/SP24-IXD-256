@@ -1,0 +1,70 @@
+import os, sys, io
+import M5
+from M5 import *
+from hardware import *
+import time
+from servo import Servo  # import servo.py
+
+title0 = None
+label0 = None
+servo1 = None
+servo2 = None
+servo3 = None
+pin41 = None
+button_value = None
+rgb2 = None
+light_status = False  # global variable to keep track of light status
+
+def setup():
+  global title0, label0, servo1, servo2, servo3, pin41, rgb2
+  M5.begin()
+  title0 = Widgets.Title("servo test", 3, 0x000000, 0xffffff, Widgets.FONTS.DejaVu18)
+  label0 = Widgets.Label("--", 3, 20, 1.0, 0xffffff, 0x000000, Widgets.FONTS.DejaVu18)
+  servo1 = Servo(pin=7)
+  servo2 = Servo(pin=38)
+  servo3 = Servo(pin=5)
+  servo1.move(90)
+  servo2.move(90)
+  servo3.move(90)
+  
+  rgb2 = RGB(io=2, n=10, type="SK6812")
+  rgb2.fill_color(get_color(0, 0, 0))
+  
+  pin41 = Pin(41, mode=Pin.IN)
+  
+def loop():
+  global pin41, button_value, rgb2, light_status
+  
+  M5.update()
+  servo1.move(60)
+  servo2.move(120)
+  servo3.move(100)
+  time.sleep(1)
+  
+  button_value = pin41.value()
+  if button_value == 0:
+    light_status = not light_status  # toggle light status
+    if light_status:
+      rgb2.fill_color(get_color(255, 255, 0))  # light on
+      print('rgb is working')
+    else:
+      rgb2.fill_color(get_color(0, 0, 0))  # light off
+      print('rgb is not working')
+  time.sleep_ms(100)
+  
+def get_color(r, g, b):
+  rgb_color = (r << 16) | (g << 8) | b
+  return rgb_color
+
+if __name__ == '__main__':
+  try:
+    setup()
+    while True:
+      loop()
+  except (Exception, KeyboardInterrupt) as e:
+    try:
+      from utility import print_error_msg
+      print_error_msg(e)
+    except ImportError:
+      print("please update to latest firmware")
+
