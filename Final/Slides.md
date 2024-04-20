@@ -1,0 +1,6 @@
+![MacBook Pro 16_ - 5](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/f93aed28-b6d0-4102-819a-1d4af768da8b)
+![MacBook Pro 16_ - 6](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/5293578c-06d0-4033-80e8-3f3f592adfc1)
+![MacBook Pro 16_ - 1](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/748ff283-6ab9-4fe2-b15b-d35453a146f9)
+![MacBook Pro 16_ - 2](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/45dcb202-75ba-4610-adda-c891c5280b8e)
+![MacBook Pro 16_ - 3](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/f577eb58-1807-42f5-991d-f0069424c6cf)
+![MacBook Pro 16_ - 4](https://github.com/OscarrrrW/SP24-IXD-256/assets/156533053/607805c7-4185-4171-a622-65b525bc5a38)
