@@ -13,3 +13,7 @@ Atom S3 board
 Light Strap
 
 See Firmware, Software and Explaination in [Slides.md](./)
+See Images in [Image.md](./)
+See Renders in [Render.md](./)
+See Video in [Video.md](./)
+
