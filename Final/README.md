@@ -12,4 +12,4 @@ Angle Unit
 Atom S3 board
 Light Strap
 
-See Firmware, Software and Explaination in [Slides.md](../)
+See Firmware, Software and Explaination in [Slides.md](./)
